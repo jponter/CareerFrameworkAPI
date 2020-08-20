@@ -194,16 +194,25 @@ function setProf(profid, profname){
 
   //from here we need to load the data for all 3 levels for the given professionId
   //https://localhost:44381/api/skills/byAttribute?ProfessionID=2&Level=2
+
+    //https://careerframeworkapi20200820151701.azurewebsites.net
   
   //clear the skills table
   clearSkillsAll();
   
   //set core skills
-  var coreSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID="+ profid +"&Level=1";
- //set Senior skills
- var seniorSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID="+ profid +"&Level=2";
-  //set principal skills
-  var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID="+ profid +"&Level=3";
+    //var coreSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
+    ////set Senior skills
+    //var seniorSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
+    ////set principal skills
+    //var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+
+
+    var coreSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
+    //set Senior skills
+    var seniorSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
+    //set principal skills
+    var principalSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
 var alert = false;
 
   //get the core skills
@@ -334,7 +343,11 @@ $.getJSON(principalSkillsUrl, function(data,status){
 }
 
 function loadProfessions(){
-  var professionsURL = "https://localhost:44381/api/Professions";
+
+    //var professionsURL = "https://localhost:44381/api/Professions";
+    var professionsURL = "https://careerframeworkapi20200820151701.azurewebsites.net/api/Professions";
+
+    
 
 
   try {    
