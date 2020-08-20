@@ -49,32 +49,32 @@ namespace CareerFrameworkAPI.Controllers
             return skillRepository.SelectByProfession(ProfessionID);
         }
 
-        [HttpPost]
-        public void Post([FromBody]Skills skill)
-        {
-            if (ModelState.IsValid)
-            {
-                skillRepository.Insert(skill);
-            }
-        }
+        //[HttpPost]
+        //public void Post([FromBody]Skills skill)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        skillRepository.Insert(skill);
+        //    }
+        //}
 
-        [HttpPut("{SkillId}")]
-        public void Put(int SkillId, [FromBody]Skills skill)
-        {
+        //[HttpPut("{SkillId}")]
+        //public void Put(int SkillId, [FromBody]Skills skill)
+        //{
 
-            skill.SkillId = SkillId;
+        //    skill.SkillId = SkillId;
             
-            if (ModelState.IsValid)
-            {
-                skillRepository.Update(skill);
-            }
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        skillRepository.Update(skill);
+        //    }
+        //}
     
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            skillRepository.Delete(id);
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    skillRepository.Delete(id);
+        //}
     
     }
 

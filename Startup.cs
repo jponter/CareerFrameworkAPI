@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CareerFrameworkAPI.Models;
 using CareerFrameworkAPI.Repositories;
+using CareerFrameworkAPI.Security;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,8 +31,21 @@ namespace CareerFrameworkAPI
         {
 
             services.AddControllers();
-
+            
+            //Appdb for CareersFramework DB
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(this.config.GetConnectionString("AppDb")));
+
+            //appdb for Identity
+            services.AddDbContext<AppIdentityDbContext>(options =>
+                options.UseSqlServer(this.config.GetConnectionString("AppDb")));
+
+            services.AddIdentity<AppIdentityUser, AppIdentityRole>().AddEntityFrameworkStores<AppIdentityDbContext>();
+
+            services.ConfigureApplicationCookie(opt =>
+            {
+                opt.LoginPath = "/Security/SignIn";
+                opt.AccessDeniedPath = "/Security/AccessDenied";
+            });
 
             //services.AddScoped<IEmployeeRepository, EmployeeSQLRepository>();
             //services.AddScoped<ICountryRespository, CountrySQLRepository>();
@@ -42,6 +57,9 @@ namespace CareerFrameworkAPI
             {
                 //options.Conventions.AddPageRoute("/ListProf", "");
             });
+
+           
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +78,8 @@ namespace CareerFrameworkAPI
 
             app.UseRouting();
 
-            
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -35,29 +35,29 @@ namespace CareerFrameworkAPI.Controllers
             return professionRepository.SelectByID(id);
         }
 
-        [HttpPost]
-        public void Post([FromBody]Professions profession)
-        {
-            if (ModelState.IsValid)
-            {
-                professionRepository.Insert(profession);
-            }
-        }
+        //[HttpPost]
+        //public void Post([FromBody]Professions profession)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        professionRepository.Insert(profession);
+        //    }
+        //}
 
-        [HttpPut("{id}")]
-        public void Update(int id, [FromBody]Professions profession)
-        {
-            if (ModelState.IsValid)
-            {
-                professionRepository.Update(profession);
-            }
-        }
+        //[HttpPut("{id}")]
+        //public void Update(int id, [FromBody]Professions profession)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        professionRepository.Update(profession);
+        //    }
+        //}
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-            professionRepository.Delete(id);
-        }
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //    professionRepository.Delete(id);
+        //}
 
     }
 }
