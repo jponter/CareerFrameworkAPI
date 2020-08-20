@@ -1,15 +1,7 @@
-body {
-    font-family: 'Montserrat';
-    font-size: 14px;
-    margin: 50px;
-
+body{
+font-family: 'Montserrat';
+font-size: 14px;
 }
-
-* {
-    padding: 0px;
-}
-
-
 .column {
     float: left;
     width: 33.33%;
@@ -161,101 +153,6 @@ body {
 
 h3 {
     display: inline-block;
-}
-
-.message {
-    color: red;
-    font-weight: bold;
-}
-
-input {
-    padding: 3px;
-    font-size: 90%;
-    letter-spacing: 1px;
-}
-
-
-select {
-    padding: 3px;
-    font-size: 90%;
-    letter-spacing: 1px;
-}
-
-table {
-    font-family: inherit;
-    font-size: inherit;
-    border-collapse: collapse
-}
-
-td {
-    padding: 10px;
-}
-
-    td.right {
-        padding: 10px;
-        text-align: right;
-        vertical-align: top;
-    }
-
-    td.left {
-        padding: 10px;
-        text-align: left;
-        vertical-align: top;
-    }
-
-th {
-    padding: 10px;
-    font-weight: bold;
-}
-
-textarea {
-    padding: 3px;
-    font-family: inherit;
-    font-size: 90%;
-    letter-spacing: 1px;
-}
-
-button {
-    display: block;
-    border: 0px solid lightgray;
-    font-size: 90%;
-    font-weight: bold;
-    text-decoration: none;
-    background-color: lightgray;
-    color: black;
-    padding: 6px;
-    width: 120px;
-    text-align: center;
-    vertical-align: middle;
-    letter-spacing: 1px;
-}
-
-.div-table {
-    display: table;
-    width: auto;
-    border-spacing: 5px;
-}
-
-.div-row {
-    display: table-row;
-    width: auto;
-    clear: both;
-}
-
-.div-col {
-    display: table-cell;
-}
-
-
-
-
-
-
-hr {
-    padding: 0px;
-    border: none;
-    height: 3px;
-    background-color: #333;
 }
 
 /* table { page-break-inside:auto }

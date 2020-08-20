@@ -295,26 +295,40 @@ $.getJSON(principalSkillsUrl, function(data,status){
         $("#lg3").append('<a href="#" class="list-group-item list-group-item-action" id=' + obj.skillCode + '>' + text + '</a>');
 
 
+
+
+
       });
 
-    
+    //set the event for all clickable skills - do it here so we are at the end of an async success call.
+        setTimeout(UpdateListClick, 100);
+        clearSkillsToLearn();
+        clearMySkills();
+
+
+        setCore();
+
+
+        populateSkillsToLearn();
+
+        setTimeout(update_core, 300);
   };
 
 
 });
 } //end alert
 
-setTimeout(UpdateListClick, 100);
-clearSkillsToLearn();
-clearMySkills();
+
+//clearSkillsToLearn();
+//clearMySkills();
 
 
-      setCore();
+//      setCore();
     
 
-populateSkillsToLearn();
+//populateSkillsToLearn();
 
-setTimeout(update_core,300);
+//setTimeout(update_core,300);
 
 
 }

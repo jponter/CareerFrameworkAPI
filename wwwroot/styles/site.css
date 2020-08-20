@@ -4,11 +4,11 @@
 }
 
 
-/*body {
-    font-family: 'Trebuchet MS';
-    font-size: 120%;
+body {
+    
+    
     margin:50px;
-}*/
+}
 
 hr {
     padding:0px;
@@ -21,7 +21,7 @@ hr {
 a,a.visited,a.hover
 {
     font-weight:bold;
-   
+    
     color:blue;
 }
 
@@ -33,7 +33,7 @@ a.linkbutton {
     background-color: lightgray;
     color: black;
     padding:6px;
-    width: 120px;
+    width:fit-content;
     text-align:center;
     vertical-align:middle;
     letter-spacing: 1px;
@@ -66,20 +66,21 @@ table {
 
 td {
     padding:10px;
+    font-weight: bold;
 }
 
 td.right {
     padding: 10px;
     text-align:right;
     vertical-align:top;
-    
+    white-space:nowrap;
 }
 
 td.left {
     padding: 10px;
     text-align: left;
     vertical-align: top;
-    
+    white-space: nowrap;
 }
 
 th {
@@ -103,7 +104,7 @@ button {
     background-color: lightgray;
     color: black;
     padding: 6px;
-    width: 120px;
+    width:auto;
     text-align: center;
     vertical-align: middle;
     letter-spacing: 1px;

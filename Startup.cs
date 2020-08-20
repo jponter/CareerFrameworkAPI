@@ -52,9 +52,15 @@ namespace CareerFrameworkAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseStatusCodePagesWithReExecute("/Error", "?code={0}");
+            app.UseExceptionHandler("/Error");
+
+
             app.UseFileServer();
 
             app.UseRouting();
+
+            
 
             app.UseEndpoints(endpoints =>
             {
