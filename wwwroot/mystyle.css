@@ -25,6 +25,10 @@ font-size: 14px;
     border-color: #FAB41E;
 }
 
+.btn-primary.focus, .btn-primary:focus{
+    background-color: #503273;
+}
+
   .btn-primary-jp:hover{
       background-color: #000000;
   }

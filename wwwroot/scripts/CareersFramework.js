@@ -1,5 +1,9 @@
 var seniorityLevel = 1;
 
+//set localhost to true for local debug in visual studio
+//SET to FALSE FOR RELEASE!
+var localhost = false;
+
       $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
         // alert("ready");
@@ -200,19 +204,20 @@ function setProf(profid, profname){
   //clear the skills table
   clearSkillsAll();
   
-  //set core skills
-    //var coreSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
-    ////set Senior skills
-    //var seniorSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
-    ////set principal skills
-    //var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+    if (localhost) {
+        var coreSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
+        ////set Senior skills
+        var seniorSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
+        ////set principal skills
+        var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+    } else {
 
-
-    var coreSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
-    //set Senior skills
-    var seniorSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
-    //set principal skills
-    var principalSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+        var coreSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
+        //set Senior skills
+        var seniorSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
+        //set principal skills
+        var principalSkillsUrl = "https://careerframeworkapi20200820151701.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+    }
 var alert = false;
 
   //get the core skills
@@ -344,9 +349,11 @@ $.getJSON(principalSkillsUrl, function(data,status){
 
 function loadProfessions(){
 
-    //var professionsURL = "https://localhost:44381/api/Professions";
-    var professionsURL = "https://careerframeworkapi20200820151701.azurewebsites.net/api/Professions";
-
+    if (localhost) {
+        var professionsURL = "https://localhost:44381/api/Professions";
+    } else {
+        var professionsURL = "https://careerframeworkapi20200820151701.azurewebsites.net/api/Professions";
+    }
     
 
 
@@ -430,7 +437,16 @@ function UpdateListClick(){
   });
 }
 
+function getDateString() {
+    var d = new Date();
 
+    var month = d.getMonth() + 1;
+    if (month < 10) { month = "0" + month };
+    var day = d.getDate();
+    if (day < 10) { day = "0" + day };
+
+    return d.getFullYear() + "-" + month + "-" + day;
+}
 
 function MakePDF(){
   //calculate how many items in skillstolearn table
@@ -438,18 +454,28 @@ function MakePDF(){
   // should be around 18 per page and thats about 600 per page length set in html2pdf
 var items = table_count("requiredTable");
 console.log("MakePDF: " + items);
-generatePDF(items*60);
+generatePDF(items*65,"SkillsToLearnPDF","SkillsToLearn-"+getDateString()+".pdf");
 
 }
 
-function generatePDF(varlength) {
+function MakePDF2() {
+    //calculate how many items in skillstolearn table
+    // todo: find out how long skills to learn is (how many rows and set the pdf length based on that
+    // should be around 18 per page and thats about 600 per page length set in html2pdf
+    var items = table_count("myTable");
+    console.log("MakePDF: " + items);
+    generatePDF(items * 65, "MySkillsPDF", "MySkills-"+getDateString()+".pdf");
+
+}
+
+function generatePDF(varlength,elementID,filenameID) {
   // Choose the element that our invoice is rendered in.
-  const element = document.getElementById("SkillsToLearnPDF");
+  const element = document.getElementById(elementID);
   // Choose the element and save the PDF for our user.
   console.log("length = " + varlength);
   html2pdf()
     .set({ html2canvas: { scale: 4,   height: varlength , windowWidth: 400 },
-           filename: 'SkillsToLearn.pdf'           
+           filename: filenameID        
             })
     .from(element)
     .save();
