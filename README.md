@@ -5,7 +5,7 @@ An API and associated front end website developed for Cloudreach Professions bus
 Aim:
 Simple visualisation of known and required skills to advance seniority in a given Profession.
 
-Running Example: https://careerframeworkapi.azurewebsites.net/
+
 
 Utilises:
 
