@@ -446,7 +446,7 @@ function MakePDF() {
   
     var items = table_count("requiredTable");
     console.log("MakePDF: " + items);
-    generatePDF(items * 65, "SkillsToLearnPDF", "SkillsToLearn-" + getDateString() + ".pdf");
+    generatePDF(items * 80, "SkillsToLearnPDF", "SkillsToLearn-" + getDateString() + ".pdf");
 
 }
 
@@ -455,7 +455,7 @@ function MakePDF2() {
    
     var items = table_count("myTable");
     console.log("MakePDF: " + items);
-    generatePDF(items * 65, "MySkillsPDF", "MySkills-" + getDateString() + ".pdf");
+    generatePDF(items * 80, "MySkillsPDF", "MySkills-" + getDateString() + ".pdf");
 
 }
 
