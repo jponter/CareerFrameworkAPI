@@ -10,50 +10,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerFrameworkAPI.Pages
 {
-    [Authorize(Roles = "Manager")]
-    public class UpdateSkillModel : PageModel
+    [Authorize(Policy = "CFAdmin")]
+    public class InsertSkillModel : PageModel
     {
-
         private readonly AppDbContext db = null;
 
+        public string Message { get; set; }
         [BindProperty]
         public Skills Skill { get; set; }
-
-        public string Message { get; set; }
-        public bool DataFound { get; set; } = true;
-
-        public UpdateSkillModel(AppDbContext db)
+        public int ProfessionId { get; set; }
+        public InsertSkillModel(AppDbContext db)
         {
             this.db = db;
         }
-
-        public void OnGet(int SkillId)
+        public void OnGet(int professionId)
         {
-            Skill = db.Skills.Find(SkillId);
-
-            if (Skill == null)
-            {
-                this.DataFound = false;
-                this.Message = "Skill Not Found!";
-
-            }
-            else
-            {
-                this.DataFound = true;
-                this.Message = "";
-            }
-
+            this.ProfessionId = professionId;
         }
 
-        public void OnPost()
+        public void OnPost(int ProfessionId)
         {
+            this.ProfessionId = ProfessionId;
             if (ModelState.IsValid)
             {
                 try
                 {
-                    db.Skills.Update(Skill);
+                    db.Skills.Add(Skill);
                     db.SaveChanges();
-                    Message = "Skill Updated Succesfully";
+                    Message = "Skill Inserted Successfully";
                 }
                 catch (DbUpdateException ex1)
                 {
@@ -69,9 +53,12 @@ namespace CareerFrameworkAPI.Pages
                     Message = ex2.Message;
                 }
             }
-        }
+            else
+            {
+                Message = "Error please alert your admin";
+            }
 
+
+        }
     }
 }
-    
-

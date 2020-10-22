@@ -6,11 +6,13 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CareerFrameworkAPI.Models;
 using CareerFrameworkAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CareerFrameworkAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SkillsController : ControllerBase

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CareerFrameworkAPI.Pages
 {
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = "CFAdmin")]
     public class ListSkillsModel : PageModel
     {
         private readonly AppDbContext db = null;

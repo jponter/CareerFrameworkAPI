@@ -5,12 +5,14 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using CareerFrameworkAPI.Models;
 using CareerFrameworkAPI.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CareerFrameworkAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ProfessionsController : ControllerBase

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerFrameworkAPI.Pages
 {
-    [Authorize(Roles = "Manager")]
+    [Authorize(Policy = "CFAdmin")]
     public class UpdateProfModel : PageModel
     {
         private readonly AppDbContext db = null;
