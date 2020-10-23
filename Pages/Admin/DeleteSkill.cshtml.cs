@@ -53,7 +53,7 @@ namespace CareerFrameworkAPI.Pages
                 db.Skills.Remove(skilltorem);
                 db.SaveChanges();
                 TempData["Message"] = "Skill Deleted Succesfully";
-                return RedirectToPage("/ListSkills", new
+                return RedirectToPage("/Admin/Index", new
                 {
                     professionId = Professions
                 }) ;

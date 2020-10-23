@@ -212,11 +212,11 @@ function setProf(profid, profname) {
         var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
     } else {
 
-        var coreSkillsUrl = "https://careerframeworkstaging.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
+        var coreSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
         //set Senior skills
-        var seniorSkillsUrl = "https://careerframeworkstaging.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
+        var seniorSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
         //set principal skills
-        var principalSkillsUrl = "https://careerframeworkstaging.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+        var principalSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
     }
 
     var alert = false;
@@ -344,7 +344,7 @@ function loadProfessions() {
     if (localhost) {
         var professionsURL = "https://localhost:44381/api/Professions";
     } else {
-        var professionsURL = "https://careerframeworkstaging.azurewebsites.net/api/Professions";
+        var professionsURL = "https://careerframeworkapi.azurewebsites.net/api/Professions";
     }
 
 
