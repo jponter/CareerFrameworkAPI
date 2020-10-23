@@ -9,23 +9,44 @@ using Microsoft.AspNetCore.Identity;
 
 using Microsoft.AspNetCore.Authorization;
 using CareerFrameworkAPI.Security;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using System.Net.Http;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CareerFrameworkAPI.Pages
 { 
     [Authorize]
     public class SignOutModel : PageModel
     {
-        private readonly SignInManager<AppIdentityUser> signinManager;
+        //private readonly SignInManager<AppIdentityUser> signinManager;
+        private IOptions<OidcOptions> options;
 
-        public SignOutModel(SignInManager<AppIdentityUser> signinManager)
+        public SignOutModel( IOptions<OidcOptions> options)
         {
-            this.signinManager = signinManager;
+           
+            this.options = options;
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPost()
         {
-            await signinManager.SignOutAsync();
-            return RedirectToPage("/Security/SignIn");
+            //await LogoutUser(User.FindFirstValue("onelogin-access-token"));
+            await HttpContext.SignOutAsync();
+            //return RedirectToPage("/");
+            // raise the logout event
+
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            SignOut();
+
+            return Redirect("/");
+
+
+
         }
+
+        
+        
     }
 }

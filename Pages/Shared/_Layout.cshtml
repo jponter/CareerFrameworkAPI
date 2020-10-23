@@ -45,7 +45,7 @@
     @if (User.Identity.IsAuthenticated)
     {
         <h2>You are signed in as @User.Identity.Name</h2>
-        <form asp-page="/Security/SignOut" method="post">
+        <form asp-page="/Security/SignOut" method="post" novalidate="novalidate">
             <button type="submit">Sign Out</button>
         </form>
     }
