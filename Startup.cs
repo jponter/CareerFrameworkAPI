@@ -144,7 +144,7 @@ namespace CareerFrameworkAPI
                 options.ClientId = configuration["oidc:clientid"];
                 options.ClientSecret = configuration["oidc:clientsecret"];
                 //options.Authority = String.Format("https://{0}.onelogin.com/oidc", Configuration["oidc:region"]);
-                options.Authority = "https://openid-connect-eu.onelogin.com/oidc";
+                options.Authority = "https://cloudreach.onelogin.com/oidc/2";
 
 
 
@@ -156,12 +156,12 @@ namespace CareerFrameworkAPI
                 options.ResponseType = OpenIdConnectResponseType.IdToken;
                 options.GetClaimsFromUserInfoEndpoint = true;
 
-                options.Scope.Add("jp_roles");
+                //options.Scope.Add("jp_roles");
                 options.Scope.Add("groups");
 
 
-                options.ClaimActions.MapJsonKey("role", "groups", "role");
-                options.TokenValidationParameters.RoleClaimType = "role";
+                //options.ClaimActions.MapJsonKey("role", "groups", "role");
+                options.TokenValidationParameters.RoleClaimType = "groups";
                 options.TokenValidationParameters.NameClaimType = "name";
 
             }

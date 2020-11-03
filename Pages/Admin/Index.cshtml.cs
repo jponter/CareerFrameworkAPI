@@ -21,9 +21,10 @@ namespace CareerFrameworkAPI.Pages
 
         public void OnGet()
         {
+            //_ = User;
 
             this.Professions = (from p in db.Professions orderby p.ProfessionId select p).ToList();
-
+            
         }
     }
 }

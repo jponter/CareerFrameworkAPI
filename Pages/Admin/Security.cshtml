@@ -15,7 +15,10 @@ are you an admin @Model.isAdmin
     }
 </dl>
 
-
+@if (User.IsInRole("CareerFrameworkAdmin"))
+{
+    <h3 class="message">Career Framework Admin</h3>
+}
 
 <form method="post" novalidate="novalidate">
 
