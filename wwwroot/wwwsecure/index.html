@@ -15,9 +15,16 @@
 
 
 
-    <link rel="stylesheet" type="text/css" href="/styles/site.css">
+    <link rel="stylesheet" type="text/css" href="/wwwsecure/styles/site.css">
 
-    <link rel="stylesheet" type="text/css" href="mystyle.css">
+    <link rel="stylesheet" type="text/css" href="/wwwsecure/mystyle.css">
+
+    <style>
+        .container-fluid {
+            padding-left: 50px;
+            padding-right: 16px;
+        }
+    </style>
 
 </head>
 
@@ -31,7 +38,7 @@
 
             <a class="navbar-brand float-right" 
                     data-toggle="tooltip" title="JLPonter" href="#">
-                <small>Version 1.4-OneLogin(OIDCV2) - 3/11/2020</small>
+                <small>Version 2.0 beta - 30/11/2020</small>
             </a>
         </div>
     </nav>
@@ -62,12 +69,13 @@
                             Select Desired Level
                         </button>
                         <div class="dropdown-menu">
+                            <button class="dropdown-item" type="button" onclick="setAssociate()">Associate</button>
                             <button class="dropdown-item" type="button" onclick="setCore()">Core</button>
                             <button class="dropdown-item" type="button" onclick="setSenior()">Senior</button>
                             <button class="dropdown-item" type="button" onclick="setPrinciple()">Principal</button>
                             <!-- <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="#">Separated link</a>
-                            </div> -->
+      <a class="dropdown-item" href="#">Separated link</a>
+    </div> -->
                         </div>
                     </div>
 
@@ -83,14 +91,23 @@
             </div>
         </div>
     </div>
-    <div class="py-5">
-        <div class="container">
+    <!--<div class="py-5">-->
+        <div class="container-fluid">
             
                 
             
             <div class="row">
-                
-                <div class="col-md-4" id="col1">
+                <div class="col-md-3" id="col0">
+                    <div class="list-group-header" data-toggle="tooltip" title="Select the skills you already have to add them to My Known Skills below">
+                        <h3 id="associate_header">Associate Skills </h3>
+                    </div>
+                    <div class="list-group" id="lg0" data-toggle="items">
+
+
+
+                    </div>
+                </div>
+                <div class="col-md-3" id="col1">
                     <div class="list-group-header" data-toggle="tooltip" title="Select the skills you already have to add them to My Known Skills below" >
                         <h3 id="core_header">Core Skills </h3>
                     </div>
@@ -100,7 +117,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-4" id="col2">
+                <div class="col-md-3" id="col2">
                     <div class="list-group-header"  data-toggle="tooltip" title="Select the skills you already have to add them to My Known Skills below">
                         <h3 id="senior_header">Senior Skills</h3>
                     </div>
@@ -113,7 +130,7 @@
 
                     </div>
                 </div>
-                <div class="col-md-4" id="col3">
+                <div class="col-md-3" id="col3">
                     <div class="list-group-header"  data-toggle="tooltip" title="Select the skills you already have to add them to My Known Skills below">
                         <h3 id="principle_header">Principal Skills</h3>
                     </div>
@@ -124,7 +141,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!--</div>-->
 
     <!-- beging the bottom tables-->
 

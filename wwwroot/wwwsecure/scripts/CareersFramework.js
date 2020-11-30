@@ -4,11 +4,11 @@
 
 //Seniority Level controls which skills are visible by default - 
 //this is tied to the seniority dropdown HTML btnSeniority
-var seniorityLevel = 1;
+var seniorityLevel = 0;
 
 //set localhost to true for local debug in visual studio
 //SET to FALSE FOR RELEASE!
-var localhost = false;
+var localhost = true;
 
 //default jquery entry point
 $(document).ready(function () {
@@ -25,7 +25,13 @@ $(document).ready(function () {
 
 });
 
-var update_core = function () {
+var update_associate = function () {
+    //update the associate totals
+    var associate_total = $("#lg0 a").length;
+    var associate_active = $("#lg0 a.active").length;
+    console.log(associate_active + " " + associate_total);
+    $("#associate_header").html("Associate Skills " + associate_active + "/" + associate_total);
+
     //update the core totals
     var core_total = $("#lg1 a").length;
     var core_active = $("#lg1 a.active").length;
@@ -71,15 +77,33 @@ var table_count = function (table) {
 
 }
 
+//set the Seniority Level to Associate
+var setAssociate = function () {
+    console.log("Set Associate called");
+    seniorityLevel = 0;
+    $("#btnSeniority").html("Associate");
+    clearSkillsToLearn();
+    console.log(" -> Call populateSkillsToLearn ");
+    setTimeout(populateSkillsToLearn, 100);
+    $("#col1").addClass("disabledbutton");
+    $("#col2").addClass("disabledbutton");
+    $("#col3").addClass("disabledbutton");
+}
+
+
 //Set the Seniority Level to Core
 var setCore = function () {
     console.log("Set Core called");
     seniorityLevel = 1;
     $("#btnSeniority").html("Core");
     clearSkillsToLearn();
+    console.log(" -> Call populateSkillsToLearn ");
     setTimeout(populateSkillsToLearn, 100);
+    $("#col1").removeClass("disabledbutton");
+    
     $("#col2").addClass("disabledbutton");
     $("#col3").addClass("disabledbutton");
+    
 }
 
 //Set the Seniority Level to Senior
@@ -91,6 +115,9 @@ var setSenior = function () {
     //populateSkillsToLearn();
     setTimeout(populateSkillsToLearn, 100);
     $("#col2").removeClass("disabledbutton");
+    $("#col1").removeClass("disabledbutton");
+    
+    $("#col3").addClass("disabledbutton");
 }
 
 //Set the Seniority Level to Principal
@@ -103,6 +130,7 @@ var setPrinciple = function () {
     setTimeout(populateSkillsToLearn, 100);
     $("#col3").removeClass("disabledbutton");
     $("#col2").removeClass("disabledbutton");
+    $("#col1").removeClass("disabledbutton");
 }
 
 //Clear the SkillsToLearn Table
@@ -118,20 +146,39 @@ var clearMySkills = function () {
 }
 
 var populateSkillsToLearn = function () {
-    $("#lg1 > a").each(function () {
-        //console.log($(this).attr("id") + $(this).html());
+
+    $("#lg0 > a").each(function () {
+        console.log("populateSkillsToLearn - Associate");
+        console.log($(this).attr("id") + $(this).html());
         var req_id = $(this).attr('id');
         var newReqRow = '<tr id=req_' + req_id + '><td>' + req_id + '</td><td>' + $(this).html() + '</td>';
         //$("#requiredTable").find('tbody:first').after(newReqRow);
         $("#requiredTable").append(newReqRow);
     });
 
-    $("#lg1 > a.active").each(function () {
+    $("#lg0 > a.active").each(function () {
         //remove the skills we already have from skills to learn
         var req_id = $(this).attr('id');
         var req_selector = "#req_" + req_id;
         $(req_selector).remove();
     });
+
+    if (seniorityLevel > 0) {
+        $("#lg1 > a").each(function () {
+            console.log($(this).attr("id") + $(this).html());
+            var req_id = $(this).attr('id');
+            var newReqRow = '<tr id=req_' + req_id + '><td>' + req_id + '</td><td>' + $(this).html() + '</td>';
+            //$("#requiredTable").find('tbody:first').after(newReqRow);
+            $("#requiredTable").append(newReqRow);
+        });
+
+        $("#lg1 > a.active").each(function () {
+            //remove the skills we already have from skills to learn
+            var req_id = $(this).attr('id');
+            var req_selector = "#req_" + req_id;
+            $(req_selector).remove();
+        });
+    }
 
     if (seniorityLevel > 1) {
 
@@ -172,6 +219,7 @@ var populateSkillsToLearn = function () {
 
 function clearSkills() {
     console.log("clearSkills");
+    $("#lg0 a.active").removeClass("active");
     $("#lg1 a.active").removeClass("active");
     $("#lg2 a.active").removeClass("active");
     $("#lg3 a.active").removeClass("active");
@@ -179,6 +227,7 @@ function clearSkills() {
 
 function clearSkillsAll() {
     console.log("ClearSkillsAll");
+    $("#lg0 a").remove();
     $("#lg1 a").remove();
     $("#lg2 a").remove();
     $("#lg3 a").remove();
@@ -187,8 +236,8 @@ function clearSkillsAll() {
 function resetAll() {
     clearSkillsToLearn();
     clearMySkills();
-    setCore();
-    update_core();
+    setAssociate();
+    update_associate();
     clearSkills();
 
 }
@@ -203,14 +252,18 @@ function setProf(profid, profname) {
     
     //clear the skills table
     clearSkillsAll();
+    resetAll();
 
     if (localhost) {
+        var associateSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=0";
+
         var coreSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
         ////set Senior skills
         var seniorSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
         ////set principal skills
         var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
     } else {
+        var associateSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=0";
 
         var coreSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
         //set Senior skills
@@ -221,11 +274,11 @@ function setProf(profid, profname) {
 
     var alert = false;
 
-    //get the core skills
-    $.getJSON(coreSkillsUrl, function (data, status) {
+    //get the associate skills
+    $.getJSON(associateSkillsUrl, function (data, status) {
         console.log("Status: " + status);
         if (status == "success") {
-            console.log("getJSON-SkillsCore:");
+            console.log("getJSON-SkillsAssociate:");
             console.log(data);
 
             $(data).each(function (index, obj) {
@@ -241,7 +294,7 @@ function setProf(profid, profname) {
                 // <a href="#" class="list-group-item list-group-item-action" id=ENG-CORE1>Has strong DevOps
                 //                         experience, is
                 //                         expert in CICD and code management. This was shown in the engagement: </a>
-                $("#lg1").append('<a href="#" class="list-group-item list-group-item-action" id=' + obj.skillCode + '>' + text + '</a>');
+                $("#lg0").append('<a href="#" class="list-group-item list-group-item-action" id=' + obj.skillCode + '>' + text + '</a>');
 
 
             });
@@ -256,6 +309,38 @@ function setProf(profid, profname) {
     });
 
     if (!alert) {
+        //get the Core Skills
+        $.getJSON(coreSkillsUrl, function (data, status) {
+            console.log("Status: " + status);
+            if (status == "success") {
+                console.log("getJSON-SkillsCore:");
+                console.log(data);
+
+                $(data).each(function (index, obj) {
+
+                    var text = $.trim(obj.skillText);
+                    console.log("Ob: " + obj.skillCode);
+                    console.log("ObTxt: " + text);
+
+
+
+
+                    //append to the #lg1
+                    // <a href="#" class="list-group-item list-group-item-action" id=ENG-CORE1>Has strong DevOps
+                    //                         experience, is
+                    //                         expert in CICD and code management. This was shown in the engagement: </a>
+                    $("#lg1").append('<a href="#" class="list-group-item list-group-item-action" id=' + obj.skillCode + '>' + text + '</a>');
+
+
+                });
+
+
+            };
+
+
+        });
+
+
         //get the Senior Skills
         $.getJSON(seniorSkillsUrl, function (data, status) {
             console.log("Status: " + status);
@@ -319,14 +404,14 @@ function setProf(profid, profname) {
                 setTimeout(UpdateListClick, 100);
                 clearSkillsToLearn();
                 clearMySkills();
+                clearSkills();
+
+                setAssociate();
 
 
-                setCore();
+                //populateSkillsToLearn();
 
-
-                populateSkillsToLearn();
-
-                setTimeout(update_core, 300);
+                setTimeout(update_associate, 300);
             };
 
 
@@ -377,7 +462,8 @@ function loadProfessions() {
 
                 setProf(firstProfessionId, firstProfessionName);
 
-                update_core();
+                //update_associate();
+                
 
 
             }
@@ -400,7 +486,7 @@ function UpdateListClick() {
             console.log("event says the skill code is " + table_contains(code));
 
         }
-        setTimeout(update_core, 100);
+        setTimeout(update_associate, 100);
 
         if ($(this).hasClass("active")) {
             console.log("event was fired from active item");
