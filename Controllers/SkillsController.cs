@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CareerFrameworkAPI.Controllers
 {
+#if AUTHON
     [Authorize]
+#endif
     [Route("api/[controller]")]
     [ApiController]
     public class SkillsController : ControllerBase

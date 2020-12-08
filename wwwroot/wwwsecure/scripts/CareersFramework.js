@@ -2,6 +2,8 @@
 //
 //Javascript for the CareersFrameworkAPI
 
+//import { jsPDF } from "./html2pdf.bundle";
+
 //Seniority Level controls which skills are visible by default - 
 //this is tied to the seniority dropdown HTML btnSeniority
 var seniorityLevel = 0;
@@ -10,12 +12,21 @@ var seniorityLevel = 0;
 //SET to FALSE FOR RELEASE!
 var localhost = true;
 
+
+var ArrayList = javascript.util.ArrayList;
+
+var mySkillsSaved = new ArrayList();
+
+
+
+
 //default jquery entry point
 $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
     // alert("ready");
 
     // we need to populate the professions selector #SelProfessions
+    console.log("document ready - call loadProfessions");
     loadProfessions();
 
     //loadProfessions() will take control of the other populations 
@@ -25,29 +36,32 @@ $(document).ready(function () {
 
 });
 
-var update_associate = function () {
+var update_skillsCounter = function () {
+    console.log("update_skillsCounter() called");
+    
     //update the associate totals
     var associate_total = $("#lg0 a").length;
     var associate_active = $("#lg0 a.active").length;
-    console.log(associate_active + " " + associate_total);
+    console.log("update_skillsCounter() - Active Skills / Total Skills");
+    console.log("Associate " + associate_active + " " + associate_total);
     $("#associate_header").html("Associate Skills " + associate_active + "/" + associate_total);
 
     //update the core totals
     var core_total = $("#lg1 a").length;
     var core_active = $("#lg1 a.active").length;
-    console.log(core_active + " " + core_total);
+    console.log("Core " + core_active + " " + core_total);
     $("#core_header").html("Core Skills " + core_active + "/" + core_total);
 
     //update senior totals
     var senior_total = $("#lg2 a").length;
     var senior_active = $("#lg2 a.active").length;
-    console.log(senior_active + " " + core_total);
+    console.log("Senior " + senior_active + " " + core_total);
     $("#senior_header").html("Senior Skills " + senior_active + "/" + senior_total);
 
     //update principle now as well :D 
     var principle_total = $("#lg3 a").length;
     var principle_active = $("#lg3 a.active").length;
-    console.log(principle_active + " " + principle_total);
+    console.log("Principal " + principle_active + " " + principle_total);
     $("#principle_header").html("Principal Skills " + principle_active + "/" + principle_total);
 
 }
@@ -146,10 +160,11 @@ var clearMySkills = function () {
 }
 
 var populateSkillsToLearn = function () {
+    console.log("populateSkillsToLearn() Called");
 
     $("#lg0 > a").each(function () {
-        console.log("populateSkillsToLearn - Associate");
-        console.log($(this).attr("id") + $(this).html());
+        //console.log("populateSkillsToLearn - Associate");
+        //console.log($(this).attr("id") + $(this).html());
         var req_id = $(this).attr('id');
         var newReqRow = '<tr id=req_' + req_id + '><td>' + req_id + '</td><td>' + $(this).html() + '</td>';
         //$("#requiredTable").find('tbody:first').after(newReqRow);
@@ -165,7 +180,7 @@ var populateSkillsToLearn = function () {
 
     if (seniorityLevel > 0) {
         $("#lg1 > a").each(function () {
-            console.log($(this).attr("id") + $(this).html());
+            //console.log($(this).attr("id") + $(this).html());
             var req_id = $(this).attr('id');
             var newReqRow = '<tr id=req_' + req_id + '><td>' + req_id + '</td><td>' + $(this).html() + '</td>';
             //$("#requiredTable").find('tbody:first').after(newReqRow);
@@ -234,17 +249,28 @@ function clearSkillsAll() {
 }
 
 function resetAll() {
+    console.log("Reset-ALL");
+    remove_localStorageKey();
     clearSkillsToLearn();
     clearMySkills();
     setAssociate();
-    update_associate();
     clearSkills();
+    setTimeout(update_skillsCounter, 300);
+    
+    
+    
 
 }
 
+function remove_localStorageKey() {
+    console.log("Removing Local Storage Key");
+    window.localStorage.removeItem("mySkills");
+    mySkillsSaved = new ArrayList();
+}
+
 function setProf(profid, profname) {
-    console.log(profid);
-    console.log(profname);
+    console.log("SetProf ProfessionID = " + profid);
+    console.log("SetProf ProfessionName = " + profname);
     $("#btnProfession").html(profname);
 
     //from here we need to load the data for all 3 levels for the given professionId
@@ -252,7 +278,7 @@ function setProf(profid, profname) {
     
     //clear the skills table
     clearSkillsAll();
-    resetAll();
+    //resetAll();
 
     if (localhost) {
         var associateSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=0";
@@ -284,8 +310,8 @@ function setProf(profid, profname) {
             $(data).each(function (index, obj) {
 
                 var text = $.trim(obj.skillText);
-                console.log("Ob: " + obj.skillCode);
-                console.log("ObTxt: " + text);
+                //console.log("Ob: " + obj.skillCode);
+                //console.log("ObTxt: " + text);
 
 
 
@@ -319,8 +345,8 @@ function setProf(profid, profname) {
                 $(data).each(function (index, obj) {
 
                     var text = $.trim(obj.skillText);
-                    console.log("Ob: " + obj.skillCode);
-                    console.log("ObTxt: " + text);
+                    //console.log("Ob: " + obj.skillCode);
+                    //console.log("ObTxt: " + text);
 
 
 
@@ -351,8 +377,8 @@ function setProf(profid, profname) {
                 $(data).each(function (index, obj) {
 
                     var text = $.trim(obj.skillText);
-                    console.log("Ob: " + obj.skillCode);
-                    console.log("ObTxt: " + text);
+                    //console.log("Ob: " + obj.skillCode);
+                    //console.log("ObTxt: " + text);
 
 
 
@@ -376,14 +402,14 @@ function setProf(profid, profname) {
         $.getJSON(principalSkillsUrl, function (data, status) {
             console.log("Status: " + status);
             if (status == "success") {
-                console.log("getJSON-SkillsSenior:");
+                console.log("getJSON-SkillsPrincipal:");
                 console.log(data);
 
                 $(data).each(function (index, obj) {
 
                     var text = $.trim(obj.skillText);
-                    console.log("Ob: " + obj.skillCode);
-                    console.log("ObTxt: " + text);
+                    //console.log("Ob: " + obj.skillCode);
+                    //console.log("ObTxt: " + text);
 
 
 
@@ -402,16 +428,22 @@ function setProf(profid, profname) {
 
                 //set the event for all clickable skills - do it here so we are at the end of an async success call.
                 setTimeout(UpdateListClick, 100);
+                console.log("setProf->ClearSkillsToLearn");
                 clearSkillsToLearn();
+                console.log("setProf->ClearMySkills");
                 clearMySkills();
+                console.log("setProf->ClearSkills");
                 clearSkills();
-
+                console.log("setProf->SetAssociate");
                 setAssociate();
 
 
                 //populateSkillsToLearn();
+                console.log("setProf->update_SkillsCounter 300ms timedelay");
+                setTimeout(update_skillsCounter, 300);
 
-                setTimeout(update_associate, 300);
+                console.log("setProf->readMySavedSkills");
+                setTimeout(readMySavedSkills,300);
             };
 
 
@@ -424,7 +456,63 @@ function setProf(profid, profname) {
 
 }
 
+function readMySavedSkills() {
+    console.log("readMySavedSkills() called");
+    mySkillsSaved = new ArrayList();
+    
+    mySkillsSavedreplica = JSON.parse(window.localStorage.getItem('mySkills'));
+
+    if (mySkillsSavedreplica) {
+        var arrayLength = mySkillsSavedreplica.a.length;
+    } else {
+        console.log("no saved skills");
+    }
+
+    for (i = 0; i < arrayLength; i++) {
+        console.log("adding to mySkills");
+        mySkillsSaved.add(mySkillsSavedreplica.a[i]);
+    }
+
+    console.log(mySkillsSaved);
+
+    var count = 0;
+    for (var i = mySkillsSaved.iterator(); i.hasNext();) {
+        var entry = i.next();
+        console.log("Entry [" + count + "] SFIACode = " + entry.SFIACode);
+
+
+        //restore the skill into MyKnown Skills and remove from Skills to learn if exists and 
+        //set to active in the skills tree
+
+        console.log("Restoring Skill " + entry.SFIACode);
+        var SFIACode = entry.SFIACode;
+        var htmlCode = entry.htmlText;
+        //add skill to MySkills table
+        var newTableRow = '<tr id=table_' + SFIACode + '><td>' + SFIACode + '</td><td>' + htmlCode + '</td>';
+        //$("#myTable").find('tbody:last').after(newTableRow);
+        $("#myTable").append(newTableRow);
+
+
+        //remove the skill from the requiredTbale
+        var req_selector = "#req_" + SFIACode;
+        console.log("Remove -> " + req_selector);
+        $(req_selector).remove();
+
+
+        //set the skill active
+        var active_selector = "#" + SFIACode;
+        $(active_selector).addClass("active");
+
+        count++;
+    }
+
+    update_skillsCounter();
+}
+
+
 function loadProfessions() {
+
+    console.log("loadProfessions() Called");
 
     if (localhost) {
         var professionsURL = "https://localhost:44381/api/Professions";
@@ -460,9 +548,10 @@ function loadProfessions() {
                     $("#selProfession").append('<button class="dropdown-item" type="button"' + 'onclick="setProf(' + obj.professionId + ',\x27' + obj.name + '\x27' + ')">' + obj.name + '</button>')
                 });
 
+                console.log("Calling setProf id:" + firstProfessionId + " name: " + firstProfessionName);
                 setProf(firstProfessionId, firstProfessionName);
 
-                //update_associate();
+                //update_skillsCounter();
                 
 
 
@@ -478,15 +567,18 @@ function loadProfessions() {
 
 
 function UpdateListClick() {
+    console.log("UpdateListClick() Called");
     //set an event on clicking on list items
     $(".list-group-item").click(function () {
         if ($(this).attr("id") != undefined) {
+            console.log("OnClick function:");
             var code = $(this).attr("id");
             console.log("searching for : " + code);
             console.log("event says the skill code is " + table_contains(code));
 
         }
-        setTimeout(update_associate, 100);
+        console.log("update_skillsCounter called with 100ms delay ");
+        setTimeout(update_skillsCounter, 100);
 
         if ($(this).hasClass("active")) {
             console.log("event was fired from active item");
@@ -499,6 +591,36 @@ function UpdateListClick() {
             //$("#requiredTable").find('tbody:last').after(newReqRow);
             $("#requiredTable").append(newReqRow);
 
+            //remove the skill from mySkillsSaved
+
+            //iterate over the arraylist and if we find a matching skill to remove by sfiacode
+            //then remove the entry from the list
+
+            var size = mySkillsSaved.size;
+            console.log("ArrayList is of size = " + size);
+
+            var count = 0;
+            for (var i = mySkillsSaved.iterator(); i.hasNext();)
+            {
+                var entry = i.next();
+                console.log("Entry [" + count + "] SFIACode = " + entry.SFIACode);
+
+
+                if (entry.SFIACode.valueOf() == code.valueOf()) {
+                    console.log("MySkillsSaved has this code - remove it")
+                    mySkillsSaved.remove(entry);
+                } else {
+                    console.log("not equal don't remove");
+                }
+
+                count++;
+            }
+
+            console.log(mySkillsSaved);
+            console.log("Saving to Local Storage");
+            window.localStorage.setItem('mySkills', JSON.stringify(mySkillsSaved));
+            
+
         } else {
             console.log("event was fired from inactive item");
             //add skill to MySkills table
@@ -510,6 +632,19 @@ function UpdateListClick() {
             //remove the skill from the requiredTbale
             var req_selector = "#req_" + code;
             $(req_selector).remove();
+
+            //we will want to add this skill to our myskillsSaved
+
+            var obj = {
+                SFIACode: code,
+                htmlText: $(this).html()
+            };
+
+            mySkillsSaved.add(obj);
+            console.log(mySkillsSaved);
+
+            console.log("Saving to LocalStorage");
+            window.localStorage.setItem('mySkills', JSON.stringify(mySkillsSaved));
 
         }
 
@@ -532,7 +667,7 @@ function MakePDF() {
   
     var items = table_count("requiredTable");
     console.log("MakePDF: " + items);
-    generatePDF(items * 80, "SkillsToLearnPDF", "SkillsToLearn-" + getDateString() + ".pdf");
+    generatePDF(items * 140, "SkillsToLearnPDF", "SkillsToLearn-" + getDateString() + ".pdf");
 
 }
 
@@ -541,7 +676,7 @@ function MakePDF2() {
    
     var items = table_count("myTable");
     console.log("MakePDF: " + items);
-    generatePDF(items * 80, "MySkillsPDF", "MySkills-" + getDateString() + ".pdf");
+    generatePDF(items * 140, "MySkillsPDF", "MySkills-" + getDateString() + ".pdf");
 
 }
 

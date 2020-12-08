@@ -1,3 +1,6 @@
+//define AUTHON to use OneLogin
+#undef AUTHON
+
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -19,8 +22,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
+
 namespace CareerFrameworkAPI
 {
+
+
     public class Startup
     {
         private IConfiguration configuration = null;
@@ -215,6 +221,10 @@ namespace CareerFrameworkAPI
 
             app.UseAuthentication();
             app.UseRouting();
+
+
+
+
             app.UseAuthorization();
 
             app.UseStaticFiles(new StaticFileOptions
@@ -227,6 +237,7 @@ namespace CareerFrameworkAPI
                 {
                     if (ctx.Context.Request.Path.StartsWithSegments("/wwwsecure"))
                     {
+#if AUTHON
                         //check for an authenticated user
                         if (!ctx.Context.User.Identity.IsAuthenticated)
                         {
@@ -243,9 +254,11 @@ namespace CareerFrameworkAPI
                             //send to a page that forces login
                             ctx.Context.Response.Redirect("/GetAuth");
                         }
+#endif
                     }
                 }
             });
+
             // This is needed if running behind a reverse proxy
             // like ngrok which is great for testing while developing
             app.UseForwardedHeaders(new ForwardedHeadersOptions
