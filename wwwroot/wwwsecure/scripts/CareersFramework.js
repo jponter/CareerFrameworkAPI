@@ -10,7 +10,7 @@ var seniorityLevel = 0;
 
 //set localhost to true for local debug in visual studio
 //SET to FALSE FOR RELEASE!
-var localhost = true;
+var localhost = false;
 
 
 var ArrayList = javascript.util.ArrayList;
@@ -289,13 +289,13 @@ function setProf(profid, profname) {
         ////set principal skills
         var principalSkillsUrl = "https://localhost:44381/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
     } else {
-        var associateSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=0";
+        var associateSkillsUrl = "https://careerframeworkbeta.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=0";
 
-        var coreSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
+        var coreSkillsUrl = "https://careerframeworkbeta.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=1";
         //set Senior skills
-        var seniorSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
+        var seniorSkillsUrl = "https://careerframeworkbeta.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=2";
         //set principal skills
-        var principalSkillsUrl = "https://careerframeworkapi.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
+        var principalSkillsUrl = "https://careerframeworkbeta.azurewebsites.net/api/skills/byAttribute?ProfessionID=" + profid + "&Level=3";
     }
 
     var alert = false;
@@ -517,7 +517,7 @@ function loadProfessions() {
     if (localhost) {
         var professionsURL = "https://localhost:44381/api/Professions";
     } else {
-        var professionsURL = "https://careerframeworkapi.azurewebsites.net/api/Professions";
+        var professionsURL = "https://careerframeworkbeta.azurewebsites.net/api/Professions";
     }
 
 
