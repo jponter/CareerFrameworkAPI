@@ -53,7 +53,7 @@ namespace CareerFrameworkAPI.Repositories
 
         List<Skills> ISkillRepository.SelectByProfessionAndLevel(int ProfessionID, int Level)
         {
-            List<Skills> data = db.Skills.FromSqlRaw("SELECT SkillID, SFIASkillCode, SFIASkillLevel, SkillCode, ProfessionID, SkillText, SkillLevel FROM Skills WHERE ProfessionID={0} AND SFIASkillLevel={1}", ProfessionID, Level).ToList();
+            List<Skills> data = db.Skills.FromSqlRaw("SELECT SkillID, SkillCode, ProfessionID, SkillText, SkillLevel FROM Skills WHERE ProfessionID={0} AND SkillLevel={1}", ProfessionID, Level).ToList();
             return data;
         }
     }

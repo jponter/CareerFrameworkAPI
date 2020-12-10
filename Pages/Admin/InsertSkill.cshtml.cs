@@ -10,7 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerFrameworkAPI.Pages
 {
+#if AUTHON
+
     [Authorize(Policy = "CFAdmin")]
+
+#endif
     public class InsertSkillModel : PageModel
     {
         private readonly AppDbContext db = null;
@@ -28,16 +32,23 @@ namespace CareerFrameworkAPI.Pages
             this.ProfessionId = professionId;
         }
 
-        public void OnPost(int ProfessionId)
+        public IActionResult OnPost(int ProfessionId)
         {
             this.ProfessionId = ProfessionId;
+            //this.Skill.SFIASkillCode = this.Skill.SkillCode;
+            //this.Skill.SFIASkillLevel = this.Skill.SkillLevel;
             if (ModelState.IsValid)
             {
                 try
                 {
                     db.Skills.Add(Skill);
                     db.SaveChanges();
-                    Message = "Skill Inserted Successfully";
+                    //Message = "Skill Inserted Successfully";
+                    TempData["Message"] = "Skill Inserted Succesfully";
+                    return RedirectToPage("/Admin/ListSkills", new
+                    {
+                        professionId = ProfessionId
+                    }) ;
                 }
                 catch (DbUpdateException ex1)
                 {
@@ -52,10 +63,12 @@ namespace CareerFrameworkAPI.Pages
                 {
                     Message = ex2.Message;
                 }
+                return Page();
             }
             else
             {
                 Message = "Error please alert your admin";
+                return Page();
             }
 
 

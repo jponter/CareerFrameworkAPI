@@ -11,16 +11,16 @@ namespace CareerFrameworkAPI.Models
         [Column("SkillID")]
         public int SkillId { get; set; }
         [Required]
-        [Column("SFIASkillCode")]
-        public string SFIASkillCode { get; set; }
+        //[Column("SFIASkillCode")]
+        //public string SFIASkillCode { get; set; }
         [Column("ProfessionID")]
         public int ProfessionId { get; set; }
         [Required]
         public string SkillText { get; set; }
         [Required]
         public int SkillLevel { get; set; }
-        [Required]
-        public int SFIASkillLevel { get; set; }
+        //[Required]
+        //public int SFIASkillLevel { get; set; }
         [Required]
         public string SkillCode { get; set; }
 

@@ -10,7 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerFrameworkAPI.Pages
 {
+#if AUTHON
+
     [Authorize(Policy = "CFAdmin")]
+
+#endif
     public class DeleteSkillModel : PageModel
     {
         private readonly AppDbContext db = null;
@@ -53,7 +57,7 @@ namespace CareerFrameworkAPI.Pages
                 db.Skills.Remove(skilltorem);
                 db.SaveChanges();
                 TempData["Message"] = "Skill Deleted Succesfully";
-                return RedirectToPage("/Admin/Index", new
+                return RedirectToPage("/Admin/ListSkills", new
                 {
                     professionId = Professions
                 }) ;

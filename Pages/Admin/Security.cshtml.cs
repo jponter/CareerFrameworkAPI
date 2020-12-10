@@ -15,7 +15,9 @@ using Microsoft.Extensions.Options;
 
 namespace CareerFrameworkAPI.Pages.Admin
 {
-   [Authorize]
+#if AUTHON
+    [Authorize]
+#endif
     public class SecurityModel : PageModel
     {
 

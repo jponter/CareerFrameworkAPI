@@ -10,7 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerFrameworkAPI.Pages
 {
+#if AUTHON
+
     [Authorize(Policy = "CFAdmin")]
+
+#endif
     public class DeleteProfModel : PageModel
     {
 
@@ -53,7 +57,8 @@ namespace CareerFrameworkAPI.Pages
                 db.Professions.Remove(prof);
                 db.SaveChanges();
                 TempData["Message"] = "Profession Deleted Succesfully";
-                return RedirectToPage("/ListProf");
+                //return RedirectToPage("/Admin/Index");
+                return RedirectToPage("./Index");
             }
             
             catch (DbUpdateException ex1)

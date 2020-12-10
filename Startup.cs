@@ -1,5 +1,5 @@
 //define AUTHON to use OneLogin
-#undef AUTHON
+#define AUTHON
 
 using System;
 using System.Collections.Generic;

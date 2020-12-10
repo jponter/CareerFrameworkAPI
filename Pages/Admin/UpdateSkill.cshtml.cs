@@ -10,7 +10,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CareerFrameworkAPI.Pages
 {
+#if AUTHON
+
     [Authorize(Policy = "CFAdmin")]
+
+#endif
     public class UpdateSkillModel : PageModel
     {
 

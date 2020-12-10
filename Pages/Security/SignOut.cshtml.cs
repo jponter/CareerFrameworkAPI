@@ -16,8 +16,13 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CareerFrameworkAPI.Pages
-{ 
+{
+
+#if AUTHON
     [Authorize]
+#endif
+
+
     public class SignOutModel : PageModel
     {
         //private readonly SignInManager<AppIdentityUser> signinManager;
