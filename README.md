@@ -16,7 +16,12 @@ Utilises:
 		html/JQuery/Javascript/Bootstrap/CSS
 
 
-v1.2: Public release of code
+v1.2: Public release of code 
+
 v1.21: Azure Pipeline build configured
+
 v1.31: removed Azure pipeline - added OneLogin protection
+
 v1.4: moved OIDC to version 2)
+
+v2.0beta SFIA - moved to SFIA coding
