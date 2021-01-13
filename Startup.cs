@@ -125,7 +125,7 @@ namespace CareerFrameworkAPI
             });
 
             services.AddControllers();
-            
+
             //Appdb for CareersFramework DB
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(this.configuration.GetConnectionString("AppDb")));
 
@@ -198,7 +198,7 @@ namespace CareerFrameworkAPI
                 //options.Conventions.AddPageRoute("/ListProf", "");
             });
 
-           
+
 
         }
 
@@ -237,7 +237,7 @@ namespace CareerFrameworkAPI
                 {
                     if (ctx.Context.Request.Path.StartsWithSegments("/wwwsecure"))
                     {
-#if AUTHON
+//#if AUTHON
                         //check for an authenticated user
                         if (!ctx.Context.User.Identity.IsAuthenticated)
                         {
@@ -254,7 +254,7 @@ namespace CareerFrameworkAPI
                             //send to a page that forces login
                             ctx.Context.Response.Redirect("/GetAuth");
                         }
-#endif
+//#endif
                     }
                 }
             });

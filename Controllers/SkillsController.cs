@@ -67,19 +67,19 @@ namespace CareerFrameworkAPI.Controllers
         //{
 
         //    skill.SkillId = SkillId;
-            
+
         //    if (ModelState.IsValid)
         //    {
         //        skillRepository.Update(skill);
         //    }
         //}
-    
+
         //[HttpDelete("{id}")]
         //public void Delete(int id)
         //{
         //    skillRepository.Delete(id);
         //}
-    
+
     }
 
 

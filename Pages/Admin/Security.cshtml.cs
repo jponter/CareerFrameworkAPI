@@ -24,6 +24,11 @@ namespace CareerFrameworkAPI.Pages.Admin
         private readonly ILogger<SecurityModel> _logger;
         private IOptions<OidcOptions> options;
         public bool isAdmin = false;
+#if AUTHON
+        public bool compilerConditions = true;
+#else
+    public bool compilerConditions = false;
+#endif
 
         public SecurityModel(ILogger<SecurityModel> logger, IOptions<OidcOptions> options)
         {
@@ -45,7 +50,7 @@ namespace CareerFrameworkAPI.Pages.Admin
             {
                 if (claim.Value == adminGroup)
                 {
-                    // 
+                    //
                     return true;
                 }
             }
@@ -101,7 +106,7 @@ namespace CareerFrameworkAPI.Pages.Admin
 
             return Redirect("/");
 
-            
+
 
         }
 

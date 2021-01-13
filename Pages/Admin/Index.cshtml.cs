@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace CareerFrameworkAPI.Pages
 {
+
 #if AUTHON
 
     [Authorize(Policy = "CFAdmin")]
 
 #endif
+
     public class ListProfModel : PageModel
     {
         private readonly AppDbContext db = null;
@@ -28,7 +30,7 @@ namespace CareerFrameworkAPI.Pages
             //_ = User;
 
             this.Professions = (from p in db.Professions orderby p.ProfessionId select p).ToList();
-            
+
         }
     }
 }
