@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "mssql1": {
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/careerframeworkapidbserver/databases/CareerFrameworkAPI_db",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/careerframeworkapidbserver/databases/CareerFrameworkAPIv2",
       "type": "mssql.azure",
       "connectionId": "AppDb",
       "secretStore": "AzureAppSettings"
